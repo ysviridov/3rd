@@ -1,0 +1,14 @@
+WITH bc_to_check ( barcode ) AS (
+    SELECT
+        *
+    FROM
+        TABLE ( sys.odcivarchar2list('80512510045199',
+'80512110669481') )
+)
+SELECT
+    bcc.barcode AS barcode_to_find,
+    ls.*
+FROM
+    bc_to_check              bcc
+    LEFT JOIN postadmin.vc_luggage_psm ls ON bcc.barcode IN ( ls.req_barcode_value_1, ls.req_barcode_value_2, ls.req_barcode_value_3,
+    ls.req_barcode_value_4, ls.req_barcode_value_5 );
